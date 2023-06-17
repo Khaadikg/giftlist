@@ -1,6 +1,5 @@
 package com.peaksoft.giftlistm5.model;
 
-import com.peaksoft.giftlistm5.enums.Category;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -24,14 +23,15 @@ public class Charity {
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String image;
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column(name = "main_category")
+    private String mainCategory; // главная категория подарка для БЛ выбирается авто с категории Бл
+//    private String subCategory; суб категория выбирается уже при подачи подарка
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "users_id")
     private User owner;
     @Transient
     private Long ownerId;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "charity")
-    private List<Gift> balance;
+    private List<Gift> balance; // подарки на пожертвования
 
 }

@@ -21,9 +21,11 @@ public class Complaint {
     // развернутое описание жалобы
     private String description;
     @Enumerated(EnumType.STRING)
+    @Column(name = "complaint_type")
     private ComplaintType type;
     // кто написал жалобу -> owner
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE}, mappedBy = "complaint")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @JoinColumn(name = "users_id")
     private User owner;
     // какому подарку принадлежит жалоба
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE}, mappedBy = "complaint")

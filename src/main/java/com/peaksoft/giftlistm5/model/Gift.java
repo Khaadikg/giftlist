@@ -21,8 +21,10 @@ public class Gift {
     private Long id;
     private String name;
     private String description;
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column(name = "main_category")
+    private String mainCategory;
+    @Column(name = "sub_category")
+    private String subCategory;
     @CreatedDate
     @Column(name = "created_date")
     private LocalDate createdDate;
@@ -33,8 +35,11 @@ public class Gift {
     private Holiday holiday;
     @Transient
     private Long holidayId;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @JoinColumn(name = "users_id")
     private User owner;
+    @Transient
+    private Long ownerId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "charities_id")
     private Charity charity;
