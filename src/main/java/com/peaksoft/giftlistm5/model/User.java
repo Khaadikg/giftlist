@@ -1,9 +1,6 @@
 package com.peaksoft.giftlistm5.model;
 
-import com.peaksoft.giftlistm5.enums.Clothes;
-import com.peaksoft.giftlistm5.enums.Gender;
-import com.peaksoft.giftlistm5.enums.Role;
-import com.peaksoft.giftlistm5.enums.Shoes;
+import com.peaksoft.giftlistm5.enums.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -45,6 +42,8 @@ public class User {
     private String phoneNumber;
     private String city;
     @Enumerated(EnumType.STRING)
+    private Country country;
+    @Enumerated(EnumType.STRING)
     @Column(name = "shoes_size")
     private Shoes shoesSize;
     @Enumerated(EnumType.STRING)
@@ -66,4 +65,6 @@ public class User {
     private List<Holiday> holidays;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Complaint> complaints;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "user")
+    private List<Notification> notifications;
 }
