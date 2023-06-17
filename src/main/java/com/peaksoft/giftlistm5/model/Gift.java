@@ -1,6 +1,7 @@
 package com.peaksoft.giftlistm5.model;
 
 import com.peaksoft.giftlistm5.enums.Category;
+import com.peaksoft.giftlistm5.enums.Condition;
 import com.peaksoft.giftlistm5.enums.State;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,6 +31,8 @@ public class Gift {
     private LocalDate createdDate;
     @Enumerated(EnumType.STRING)
     private State state;
+    @Enumerated(EnumType.STRING)
+    private Condition condition;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;

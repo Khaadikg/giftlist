@@ -40,6 +40,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
+    private Boolean mailing;
     @Column(name = "phone_number")
     private String phoneNumber;
     private String city;
