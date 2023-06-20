@@ -34,6 +34,8 @@ public class Gift {
     private State state;
     @Enumerated(EnumType.STRING)
     private Condition condition;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Complaint complaint;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
