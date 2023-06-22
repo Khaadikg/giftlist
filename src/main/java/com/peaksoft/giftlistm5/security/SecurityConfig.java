@@ -25,9 +25,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-       http.authorizeRequests()
-               .anyRequest().authenticated()
-               .and().oauth2Login();
+
+        http.cors().and().csrf().disable()
+                .authorizeRequests()
+//       http.authorizeRequests()
+               .antMatchers("/api/auth/sign-up").permitAll()
+               .antMatchers(HttpMethod.POST, "/api/**").permitAll()
+               .and()
+               .sessionManagement()
+               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//               .and().oauth2Login();
     }
 
     @Bean
