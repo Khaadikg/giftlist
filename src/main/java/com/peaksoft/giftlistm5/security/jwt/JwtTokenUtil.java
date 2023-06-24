@@ -5,12 +5,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
+@Service
 public class JwtTokenUtil {
     @Value("java_moscow5")
     private String jwtSecret;
@@ -22,7 +23,7 @@ public class JwtTokenUtil {
                 .setSubject(subject)
                 .setIssuedAt( new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDITY))
-                .signWith(SignatureAlgorithm.ES512,jwtSecret)
+                .signWith(SignatureAlgorithm.HS512,jwtSecret)
                 .compact();
     }
 

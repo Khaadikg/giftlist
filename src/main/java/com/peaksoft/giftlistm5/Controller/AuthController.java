@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/jwt")
-
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
@@ -35,7 +34,7 @@ public class AuthController {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
         authenticationManager.authenticate(token);
-        User user = userRepository.finByEmail(token.getName()).get();
+        User user = userRepository.findByEmail(token.getName()).get();
         return loginMapper.loginView(jwtTokenUtil.generateToken(user),"Successful",user );
     }
 }

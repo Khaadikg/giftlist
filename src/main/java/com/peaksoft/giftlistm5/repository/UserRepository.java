@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 @Repository
 public interface UserRepository   extends JpaRepository<User, Long> {
-    @Query("select u from User u where u.email =:email")
+//    @Query("select u from User u where u.email =:email")
+//    User getUserByUserEmail(@Param("email") String email);
 
-    User getUserByUserEmail(@Param("email") String email);
-    Optional<User> finByEmail(String email);
+    Optional<User> findByEmail(String email);
 }
