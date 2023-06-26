@@ -28,12 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-//       http.authorizeRequests()
-               .antMatchers("/api/auth/sign-up").permitAll()
-               .antMatchers(HttpMethod.POST, "/api/**").permitAll()
-               .and()
-               .sessionManagement()
-               .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .antMatchers("/api/auth/sign-up").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/**").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //               .and().oauth2Login();
     }
 

@@ -36,4 +36,8 @@ public class UserService {
                 .password(user.getPassword())
                 .passwordConfirm(user.getPasswordConfirm()).build();
     }
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }
