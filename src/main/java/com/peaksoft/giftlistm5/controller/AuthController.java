@@ -20,7 +20,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("sign-up")
-    public UserResponse signUp(@RequestBody UserRequest request) {
+    public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
         return userService.registration(request);
     }
 }

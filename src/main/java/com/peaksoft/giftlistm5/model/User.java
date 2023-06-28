@@ -27,22 +27,13 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "email", unique = true)
-    @NotEmpty
-    @NotNull
-    @Email(message = "{register.email.invalid}")
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
     @CreatedDate
     @Column(name = "created_date")
     private LocalDate createdDate;
-    @Transient
-    @Size(min = 8, max = 20, message = "Password size not less then 8 character and more 20")
-//    @Pattern(regexp = "^[a-zA-Z0-9]{8}", message = "The password can contain only characters and digit ")
     private String password;
-    @Transient
-    @Column(name = "password_confirm")
-    private String passwordConfirm;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
