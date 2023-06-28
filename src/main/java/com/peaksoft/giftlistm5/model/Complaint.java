@@ -28,7 +28,7 @@ public class Complaint {
     @JoinColumn(name = "users_id")
     private User owner;
     // какому подарку принадлежит жалоба
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE}, mappedBy = "complaint")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
     private Gift gift;
 
 }
