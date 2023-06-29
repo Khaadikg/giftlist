@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,7 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email", unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -32,8 +34,6 @@ public class User {
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
-    @Column(name = "password_confirm")
-    private String passwordConfirm;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
