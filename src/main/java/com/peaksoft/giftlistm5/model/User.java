@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -27,6 +28,7 @@ public class User implements UserDetails{
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email", unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -34,8 +36,6 @@ public class User implements UserDetails{
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
-    @Column(name = "password_confirm")
-    private String passwordConfirm;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
