@@ -18,8 +18,4 @@ public class AuthController {
         return userService.registration(request);
     }
 
-//    @GetMapping("/oauth2")
-//    public UserResponse create(OAuth2AuthenticationToken oAuth2AuthenticationToken)  {
-//        return userService.createAndSaveUserByGmail(oAuth2AuthenticationToken);
-//    }
 }

@@ -29,27 +29,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-//    }
-
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated().and().oauth2Login()
+//                .antMatchers("/oauth/**").permitAll()
+                .anyRequest().authenticated()
+                .and().oauth2Login()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
     }
-
-
-
 
 }
