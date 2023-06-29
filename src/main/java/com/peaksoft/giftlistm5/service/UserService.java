@@ -56,20 +56,20 @@ public class UserService {
         return "good";
     }
 
-    public UserResponse createAndSaveUserByGmail(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws Exception {
+    public UserResponse createAndSaveUserByGmail(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
         JSONObject json = new JSONObject(oAuth2AuthenticationToken.getPrincipal());
         User user = new User();
         user.setId(user.getId());
-            user.setFirstName((String) json.get("givenName"));
-            user.setLastName((String) json.get("familyName"));
-            user.setEmail((String) json.get("email"));
-            JSONArray roles = (JSONArray) json.get("authorities");
-            String roleName = String.valueOf(roles.getJSONObject(0).get("authority"));
-            user.setRole(Role.valueOf(roleName.substring(5)));
+        user.setFirstName((String) json.get("givenName"));
+        user.setLastName((String) json.get("familyName"));
+        user.setEmail((String) json.get("email"));
+        JSONArray roles = (JSONArray) json.get("authorities");
+        String roleName = String.valueOf(roles.getJSONObject(0).get("authority"));
+        user.setRole(Role.valueOf(roleName.substring(5)));
         userRepository.save(user);
         return mapToGoogleResponse(user);
-
     }
+
     public UserResponse mapToGoogleResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())

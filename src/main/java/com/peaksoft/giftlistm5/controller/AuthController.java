@@ -17,8 +17,9 @@ public class AuthController {
     public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
         return userService.registration(request);
     }
-    @GetMapping("/oauth2")
-    public UserResponse create(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws Exception {
-        return userService.createAndSaveUserByGmail(oAuth2AuthenticationToken);
-    }
+
+//    @GetMapping("/oauth2")
+//    public UserResponse create(OAuth2AuthenticationToken oAuth2AuthenticationToken)  {
+//        return userService.createAndSaveUserByGmail(oAuth2AuthenticationToken);
+//    }
 }
