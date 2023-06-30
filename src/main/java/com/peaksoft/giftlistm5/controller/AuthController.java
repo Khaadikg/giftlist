@@ -4,7 +4,6 @@ import com.peaksoft.giftlistm5.dto.UserRequest;
 import com.peaksoft.giftlistm5.dto.UserResponse;
 import com.peaksoft.giftlistm5.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,5 +16,4 @@ public class AuthController {
     public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
         return userService.registration(request);
     }
-
 }
