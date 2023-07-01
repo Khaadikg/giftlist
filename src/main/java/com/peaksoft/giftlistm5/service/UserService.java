@@ -10,14 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
     public UserResponse registration(UserRequest request) {
         if (!checkValidation(request).equals("good"))
             throw new IncorrectLoginException("Your " + checkValidation(request) + "is incorrect!");
@@ -30,7 +29,8 @@ public class UserService {
         userRepository.save(user);
         return mapToResponse(user);
     }
-    public UserResponse mapToResponse(User user){
+
+    public UserResponse mapToResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
@@ -38,14 +38,13 @@ public class UserService {
                 .mailing(user.getMailing())
                 .email(user.getEmail()).build();
     }
+
     public String checkValidation(UserRequest request) {
         if (request.getPassword().length() < 8) {
             return "password";
-        }
-        else if (request.getLastName() == null || request.getFirstName() == null) {
+        } else if (request.getLastName() == null || request.getFirstName() == null) {
             return "name";
-        }
-        else if (!request.getEmail().contains("@")) {
+        } else if (!request.getEmail().contains("@")) {
             return "email";
         }
         return "good";
