@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/oauth")
 @AllArgsConstructor
-public class GoogleController {
+public class SignupWithGoogle {
     private final UserService userService;
 
     @GetMapping("/registration")
-    public UserResponse create(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
+    public UserResponse signUpWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
         return userService.createAndSaveUserByGmail(oAuth2AuthenticationToken);
     }
 }

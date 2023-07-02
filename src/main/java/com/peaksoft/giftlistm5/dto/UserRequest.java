@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 @Setter
 @RequiredArgsConstructor
 public class UserRequest {
-//    private OAuth2AuthenticationToken oAuth2AuthenticationToken;
     private String firstName;
     private String lastName;
     private String email;
