@@ -1,4 +1,4 @@
-package com.peaksoft.giftlistm5.Controller;
+package com.peaksoft.giftlistm5.controller;
 
 import com.peaksoft.giftlistm5.dto.*;
 import com.peaksoft.giftlistm5.model.User;
@@ -24,7 +24,7 @@ public class AuthController {
     private final LoginMapper loginMapper;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("sing-up")
+    @PostMapping("sign-up")
     public UserResponse signIn(@RequestBody UserRequest userRequest){
         return userService.create(userRequest);
     }

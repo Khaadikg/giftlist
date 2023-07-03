@@ -12,6 +12,8 @@ public class LoginMapper {
         if (user != null){
             loginResponse.setAuthorities(user.getRole().getAuthority());
         }
+        loginResponse.setFirstName(user.getFirstName());
+        loginResponse.setLastName(user.getLastName());
         return loginResponse;
     }
 }

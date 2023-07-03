@@ -74,7 +74,8 @@ public class User implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-        return authorities;
+        System.out.println("Тут был");
+        return  authorities;
     }
 
     @Override
