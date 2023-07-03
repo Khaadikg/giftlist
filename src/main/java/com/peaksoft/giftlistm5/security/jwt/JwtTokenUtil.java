@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 @Service
 public class JwtTokenUtil {
-    @Value("java_moscow5")
+    @Value("secret")
     private String jwtSecret;
     private final long JWT_TOKEN_VALIDITY = 24*7*60*60*100l; //ONE WEEK
 
@@ -22,7 +22,7 @@ public class JwtTokenUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt( new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDITY))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS512,jwtSecret)
                 .compact();
     }
@@ -36,10 +36,10 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, Claims::getExpiration);
     }
     private <T> T getClaimFromToken(String token, Function<Claims,T> function){
-        final Claims claims = getAllClaimsfromToken(token);
+        final Claims claims = getAllClaimsFromToken(token);
         return function.apply(claims);
     }
-    private Claims getAllClaimsfromToken(String token){
+    private Claims getAllClaimsFromToken(String token){
         return  Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

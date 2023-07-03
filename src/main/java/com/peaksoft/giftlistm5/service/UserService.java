@@ -35,7 +35,6 @@ public class UserService {
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .mailing(user.getMailing())
                 .email(user.getEmail()).build();
     }
     public String checkValidation(UserRequest request) {
