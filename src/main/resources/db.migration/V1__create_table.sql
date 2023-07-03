@@ -6,15 +6,15 @@
 
 
 INSERT INTO users(CITY, CLOTHES_SIZE, COUNTRY, CREATED_DATE, EMAIL, FIRST_NAME, GENDER, IMAGE, INTERESTS, LAST_NAME,
-                  MAILING, PASSWORD,  PHONE_NUMBER, ROLE, SHOES_SIZE)
-VALUES ('Bishkek','S','KYRGYZSTAN','2023-06-23','user1@gmail.com','Aida','FEMALE',null,
-        'dancing,foreign language,cooking','Karimova',true,'$2a$12$vzHVGPVigP75lyeCEB3Skesz1uKHaPm.AkkRhKc0v2o6MifyHg3WO','+996705230623','USER','THIRTY_SIX'),
+                  MAILING, PASSWORD, PASSWORD_CONFIRM, PHONE_NUMBER, ROLE, SHOES_SIZE)
+VALUES ('Bishkek','S','Kyrgyzstan','2023-06-23','user1@gmail.com','Aida','Female',null,
+        'dancing,foreign language,cooking','Karimova',true,'$2a$12$vzHVGPVigP75lyeCEB3Skesz1uKHaPm.AkkRhKc0v2o6MifyHg3WO','$2a$12$vzHVGPVigP75lyeCEB3Skesz1uKHaPm.AkkRhKc0v2o6MifyHg3WO','+996705230623','USER','36'),
 
        ('Paris','M','France','2023-04-12','user2@gmail.com','Arsen','Male',null,'coding and reading articles',
-        'Alimov',true,'$2a$12$m0sp6rsG.xqEsLtgMlXTXeD1Ls5gtQNHWqgZI/1sdpzYfkR2GYTIi','+33 88549853','USER',40),
+        'Alimov',true,'$2a$12$m0sp6rsG.xqEsLtgMlXTXeD1Ls5gtQNHWqgZI/1sdpzYfkR2GYTIi','$2a$12$m0sp6rsG.xqEsLtgMlXTXeD1Ls5gtQNHWqgZI/1sdpzYfkR2GYTIi','+33 88549853','USER',40),
 
        ('Moscow','S','Russia','2023-06-22','admin@gmail.com','Nurisa','Female',null,
-        'reading,learn languages,complete sudoku','Mamatisaeva',true,'$2a$12$mTqKqDrY8Vgqt.JLArqDz.Xsm4hH7vqlsT82ylhKcheb/ccs0JCxi','+79917645633','ADMIN','36');
+        'reading,learn languages,complete sudoku','Mamatisaeva',true,'$2a$12$mTqKqDrY8Vgqt.JLArqDz.Xsm4hH7vqlsT82ylhKcheb/ccs0JCxi','$2a$12$mTqKqDrY8Vgqt.JLArqDz.Xsm4hH7vqlsT82ylhKcheb/ccs0JCxi','+79917645633','ADMIN','36');
 INSERT INTO charities(CREATED_DATE, IMAGE, MAIN_CATEGORY, NAME, USERS_ID)
 VALUES ('2023-04-15',null,null,'Kamkorduk',1);
 

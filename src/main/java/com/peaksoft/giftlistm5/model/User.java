@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -22,7 +21,7 @@ import java.util.*;
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", insertable=false, updatable=false)
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
