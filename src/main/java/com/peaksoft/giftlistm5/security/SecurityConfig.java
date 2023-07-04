@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -49,14 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/sign-up").permitAll()
-                .antMatchers("/api/auth/sign-in").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/**").permitAll()
                 .anyRequest()
                 .authenticated()
