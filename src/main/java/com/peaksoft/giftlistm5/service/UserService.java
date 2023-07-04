@@ -1,14 +1,17 @@
 package com.peaksoft.giftlistm5.service;
 
+import com.peaksoft.giftlistm5.enums.Role;
+import org.json.*;
 import com.peaksoft.giftlistm5.dto.UserRequest;
 import com.peaksoft.giftlistm5.dto.UserResponse;
-import com.peaksoft.giftlistm5.exception.IncorrectLoginException;
 import com.peaksoft.giftlistm5.model.User;
 import com.peaksoft.giftlistm5.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +20,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserResponse registration(UserRequest request) {
-        if (!checkValidation(request).equals("good"))
-            throw new IncorrectLoginException("Your " + checkValidation(request) + "is incorrect!");
+    public UserResponse signUpWithGoogle(UserRequest request) throws Exception {
+        if (!checkValidation(request).equals("good")) {
+            throw new Exception(checkValidation(request));
+        }
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -48,5 +52,27 @@ public class UserService {
             return "email";
         }
         return "good";
+    }
+
+    public UserResponse createAndSaveUserByGmail(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
+        JSONObject json = new JSONObject(oAuth2AuthenticationToken.getPrincipal());
+        User user = new User();
+        user.setId(user.getId());
+        user.setFirstName((String) json.get("givenName"));
+        user.setLastName((String) json.get("familyName"));
+        user.setEmail((String) json.get("email"));
+        JSONArray roles = (JSONArray) json.get("authorities");
+        String roleName = String.valueOf(roles.getJSONObject(0).get("authority"));
+        user.setRole(Role.valueOf(roleName.substring(5)));
+        userRepository.save(user);
+        return mapToGoogleResponse(user);
+    }
+
+    public UserResponse mapToGoogleResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail()).build();
     }
 }

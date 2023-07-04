@@ -4,10 +4,7 @@ import com.peaksoft.giftlistm5.dto.UserRequest;
 import com.peaksoft.giftlistm5.dto.UserResponse;
 import com.peaksoft.giftlistm5.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +13,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("sign-up")
-    public UserResponse signUp(@RequestBody UserRequest request) {
-        return userService.registration(request);
+    public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
+        return userService.signUpWithGoogle(request);
     }
 }
