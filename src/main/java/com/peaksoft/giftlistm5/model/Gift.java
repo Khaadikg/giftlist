@@ -1,6 +1,5 @@
 package com.peaksoft.giftlistm5.model;
 
-import com.peaksoft.giftlistm5.enums.Category;
 import com.peaksoft.giftlistm5.enums.Condition;
 import com.peaksoft.giftlistm5.enums.State;
 import lombok.*;
@@ -8,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "gifts")

@@ -19,12 +19,13 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", insertable=false, updatable=false)
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email", unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -32,8 +33,6 @@ public class User {
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
-    @Column(name = "password_confirm")
-    private String passwordConfirm;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
