@@ -18,6 +18,7 @@ public class Charity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="name")
     private String name;
     @CreatedDate
     @Column(name = "created_date")
@@ -25,7 +26,7 @@ public class Charity {
     private String image;
     @Column(name = "main_category")
     private String mainCategory; // главная категория подарка для БЛ выбирается авто с категории Бл
-//    private String subCategory; суб категория выбирается уже при подачи подарка
+    private String subCategory; //суб категория выбирается уже при подачи подарка
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "users_id")
     private User owner;
