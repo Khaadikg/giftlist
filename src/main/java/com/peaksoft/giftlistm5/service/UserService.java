@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserResponse registration(UserRequest request) throws Exception {
+    public UserResponse signUpWithGoogle(UserRequest request) throws Exception {
         if (!checkValidation(request).equals("good")) {
             throw new Exception(checkValidation(request));
         }

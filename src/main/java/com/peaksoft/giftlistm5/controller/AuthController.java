@@ -14,6 +14,6 @@ public class AuthController {
 
     @PostMapping("sign-up")
     public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
-        return userService.registration(request);
+        return userService.signUpWithGoogle(request);
     }
 }
