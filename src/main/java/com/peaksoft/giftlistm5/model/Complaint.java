@@ -24,11 +24,11 @@ public class Complaint {
     @Column(name = "complaint_type")
     private ComplaintType type;
     // кто написал жалобу -> owner
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "users_id")
     private User owner;
     // какому подарку принадлежит жалоба
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE})
     private Gift gift;
 
 }

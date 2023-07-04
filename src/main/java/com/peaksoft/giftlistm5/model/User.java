@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", insertable=false, updatable=false)
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id;
     @Column(name = "first_name")
     private String firstName;
