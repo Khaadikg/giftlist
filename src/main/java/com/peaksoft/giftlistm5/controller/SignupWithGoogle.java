@@ -18,4 +18,5 @@ public class SignupWithGoogle {
     public UserResponse signUpWithGoogle(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
         return userService.createAndSaveUserByGmail(oAuth2AuthenticationToken);
     }
+
 }
