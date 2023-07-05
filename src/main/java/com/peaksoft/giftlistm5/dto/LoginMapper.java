@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LoginMapper {
-    public LoginResponse loginView(String token, String message, User user){
+
+    public LoginResponse loginView(String token, String message, User user) {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setMessage(message);
         loginResponse.setJwt(token);
-        if (user != null){
+        if (user != null) {
             loginResponse.setAuthorities(user.getRole().getAuthority());
         }
         loginResponse.setFirstName(user.getFirstName());
