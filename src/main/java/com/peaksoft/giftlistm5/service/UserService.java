@@ -1,8 +1,5 @@
 package com.peaksoft.giftlistm5.service;
-import com.peaksoft.giftlistm5.enums.Role;
-import org.json.*;
-import com.peaksoft.giftlistm5.dto.UserRequest;
-import com.peaksoft.giftlistm5.dto.UserResponse;
+
 import com.peaksoft.giftlistm5.dto.*;
 import com.peaksoft.giftlistm5.enums.Role;
 import com.peaksoft.giftlistm5.exception.IncorrectLoginException;
@@ -11,6 +8,8 @@ import com.peaksoft.giftlistm5.repository.UserRepository;
 import com.peaksoft.giftlistm5.security.jwt.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;

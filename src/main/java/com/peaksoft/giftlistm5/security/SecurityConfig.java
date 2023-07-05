@@ -2,7 +2,7 @@ package com.peaksoft.giftlistm5.security;
 
 import com.peaksoft.giftlistm5.security.jwt.JwtTokenFilter;
 import com.peaksoft.giftlistm5.service.UserDetailsServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,10 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(
         securedEnabled = true,
         prePostEnabled = true,
@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userService;
     private final JwtTokenFilter jwtTokenFilter;
 
+    @Autowired
     public SecurityConfig(UserDetailsServiceImpl userService, JwtTokenFilter jwtTokenFilter) {
         this.userService = userService;
         this.jwtTokenFilter = jwtTokenFilter;
