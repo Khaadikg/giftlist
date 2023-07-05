@@ -1,5 +1,7 @@
 package com.peaksoft.giftlistm5.controller;
 
+import com.peaksoft.giftlistm5.dto.LoginRequest;
+import com.peaksoft.giftlistm5.dto.LoginResponse;
 import com.peaksoft.giftlistm5.dto.UserRequest;
 import com.peaksoft.giftlistm5.dto.UserResponse;
 import com.peaksoft.giftlistm5.service.UserService;
@@ -14,6 +16,11 @@ public class AuthController {
 
     @PostMapping("sign-up")
     public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
-        return userService.signUpWithGoogle(request);
+        return userService.registration(request);
+    }
+
+    @PostMapping("sign-in")
+    public LoginResponse signIn(@RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest);
     }
 }
