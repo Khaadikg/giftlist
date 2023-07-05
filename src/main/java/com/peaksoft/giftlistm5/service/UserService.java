@@ -1,5 +1,8 @@
 package com.peaksoft.giftlistm5.service;
-
+import com.peaksoft.giftlistm5.enums.Role;
+import org.json.*;
+import com.peaksoft.giftlistm5.dto.UserRequest;
+import com.peaksoft.giftlistm5.dto.UserResponse;
 import com.peaksoft.giftlistm5.dto.*;
 import com.peaksoft.giftlistm5.enums.Role;
 import com.peaksoft.giftlistm5.exception.IncorrectLoginException;
@@ -10,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -86,5 +90,27 @@ public class UserService {
         } else {
             throw new IncorrectLoginException("Password is not correct" + " or " + "Access denied! You are not registered");
         }
+    }
+
+    public UserResponse createAndSaveUserByGmail(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
+        JSONObject json = new JSONObject(oAuth2AuthenticationToken.getPrincipal());
+        User user = new User();
+        user.setId(user.getId());
+        user.setFirstName((String) json.get("givenName"));
+        user.setLastName((String) json.get("familyName"));
+        user.setEmail((String) json.get("email"));
+        JSONArray roles = (JSONArray) json.get("authorities");
+        String roleName = String.valueOf(roles.getJSONObject(0).get("authority"));
+        user.setRole(Role.valueOf(roleName.substring(5)));
+        userRepository.save(user);
+        return mapToGoogleResponse(user);
+    }
+
+    public UserResponse mapToGoogleResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail()).build();
     }
 }
