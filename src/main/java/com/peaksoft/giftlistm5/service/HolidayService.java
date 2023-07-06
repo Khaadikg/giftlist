@@ -52,8 +52,6 @@ public class HolidayService {
         holidayRepository.save(holiday);
         log.info("create holiday ok");
         return mapToResponse(holiday);
-
-
     }
 
     public HolidayResponse update(Long id, HolidayRequest request) throws NotFoundException{
