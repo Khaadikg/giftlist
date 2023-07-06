@@ -20,6 +20,7 @@ public class Holiday {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String image;
     // дата празднования события -> date
     private LocalDate date;
     @CreatedDate
