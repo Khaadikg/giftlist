@@ -66,6 +66,8 @@ public class User implements UserDetails{
     private List<Holiday> holidays;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Complaint> complaints;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "receiver")
+    private List<Notification> receiving;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Notification> notifications;
 
