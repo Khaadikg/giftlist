@@ -6,3 +6,28 @@ spring:
           google:
             clientId: 835858925955-4evq0t0e3eb84mef4ohhcj671m7v6hmf.apps.googleusercontent.com
             clientSecret: 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
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIASOMNBDD7M5LPLB4K
+      secret-key: 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
+    region:
+      static: us-east-2
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: peaksoft-java5
+
+
+
+server:
+  port: 9090
