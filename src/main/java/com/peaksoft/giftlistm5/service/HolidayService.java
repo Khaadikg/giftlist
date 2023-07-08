@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,64 +43,54 @@ public class HolidayService {
 
 
     public HolidayResponse create(HolidayRequest request) {
-
-        //       Holiday holiday= holidayRepository.save(request.)
-
-
+        User user = getAuthUser();
         Holiday holiday = new Holiday();
         holiday.setName(request.getName());
-//        holiday.setImage(request.getImage());
+        holiday.setImage(request.getImage());
         if (request.getImage() == null){
             holiday.setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIiwDDS9S7wYp5muIVCt9PwRmmQpP5rSYkg&usqp=CAU");
-    }else {
+        }else {
             holiday.setImage(request.getImage());
         }
         holiday.setDate(request.getDate());
         holiday.setCreatedDate(LocalDate.now());
-
-        User user = userRepository.findById(request.getUserId()).get();
         holiday.setUser(user);
         holidayRepository.save(holiday);
         log.info("create holiday ok");
         return mapToResponse(holiday);
     }
 
-    public HolidayResponse update(Long id, HolidayRequest request) throws NotFoundException{
-        Holiday holiday = holidayRepository.findById(id).get();
-
+    public HolidayResponse update(Long id, HolidayRequest request) {
+        Holiday holiday = holidayRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Holiday not found by id = " + id)
+        );
         holiday.setName(request.getName());
         holiday.setImage(request.getImage());
         holiday.setDate(request.getDate());
-        holiday.setCreatedDate(request.getCreateDate());
         holidayRepository.save(holiday);
         return mapToResponse(holiday);
 
         }
-    public void delete(Long holidayId) {
-        holidayRepository.deleteById(holidayId);
+    public void delete(Long id) {
+        holidayRepository.deleteById(id);
+//        Holiday holiday = holidayRepository.findById(id).get();
+//        holidayRepository.deleteById(holiday.getId());
+//        lo
     }
 
 
     public HolidayResponse mapToResponse(Holiday holiday) {
+        User user = getAuthUser();
         return HolidayResponse.builder()
                 .id(holiday.getId())
                 .name(holiday.getName())
                 .image(holiday.getImage())
                 .date(holiday.getDate())
                 .createDate(LocalDate.now())
+                .ownerName(user.getFirstName() + " " + user.getLastName())
                 .build();
     }
 
-//    public HolidayResponse mapToResponse(Holiday holiday) {
-//        HolidayResponse holidayResponse = new HolidayResponse();
-//        holidayResponse.setId(holiday.getId());
-//        holidayResponse.setName(holiday.getName());
-//        holidayResponse.setImage(holiday.getImage());
-//        holidayResponse.setDate(holiday.getDate());
-//        holidayResponse.setCreateDate(holiday.getCreatedDate());
-//
-//        return holidayResponse;
-//    }
     public HolidayResponseView searchAndPagination(String text, int page, int size){
         Pageable pageable = PageRequest.of(page-1, size);
         HolidayResponseView responseView = new HolidayResponseView();
@@ -119,6 +110,8 @@ public class HolidayService {
         String name = text == null ? "" : text;
         return holidayRepository.searchAndPagination(name.toUpperCase(), pageable);
     }
-
+    private User getAuthUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
 }
