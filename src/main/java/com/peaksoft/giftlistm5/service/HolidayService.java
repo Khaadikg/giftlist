@@ -2,16 +2,12 @@ package com.peaksoft.giftlistm5.service;
 
 import com.peaksoft.giftlistm5.dto.HolidayRequest;
 import com.peaksoft.giftlistm5.dto.HolidayResponse;
-import com.peaksoft.giftlistm5.dto.HolidayResponseView;
 import com.peaksoft.giftlistm5.exception.NotFoundException;
 import com.peaksoft.giftlistm5.model.Holiday;
 import com.peaksoft.giftlistm5.model.User;
 import com.peaksoft.giftlistm5.repository.HolidayRepository;
-import com.peaksoft.giftlistm5.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +29,9 @@ public class HolidayService {
     }
 
     public HolidayResponse getById(Long id) {
-        Holiday holiday = holidayRepository.findById(id).get();
+        Holiday holiday = holidayRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Holiday not found by id = " + id)
+        );
         return mapToResponse(holiday);
     }
 
@@ -85,25 +83,6 @@ public class HolidayService {
                 .build();
     }
 
-    public HolidayResponseView searchAndPagination(String text, int page, int size){
-        Pageable pageable = PageRequest.of(page-1, size);
-        HolidayResponseView responseView = new HolidayResponseView();
-        responseView.setHolidayResponses(view(search(text,pageable)));
-        return responseView;
-    }
-
-    public List<HolidayResponse> view(List<Holiday> holidays){
-        List<HolidayResponse> holidayResponses = new ArrayList<>();
-        for (Holiday holiday : holidays) {
-            holidayResponses.add(mapToResponse(holiday));
-        }
-        return holidayResponses;
-    }
-
-    private List<Holiday> search(String text, Pageable pageable) {
-        String name = text == null ? "" : text;
-        return holidayRepository.searchAndPagination(name.toUpperCase(), pageable);
-    }
     private User getAuthUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
