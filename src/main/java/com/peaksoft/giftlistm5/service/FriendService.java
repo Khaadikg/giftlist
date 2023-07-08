@@ -150,6 +150,7 @@ public class FriendService {
                 .email(user.getEmail())
                 .mailing(user.getMailing()).build();
     }
+
     public User getAuthorizedUser(Principal principal) {
         if (principal == null) throw new NotFoundException("There is no principal!");
         return userRepository.findByEmail(principal.getName())
