@@ -27,6 +27,7 @@ public class HolidayService {
     private final UserRepository userRepository;
 
 
+
     public List<HolidayResponse> getAll() {
         List<HolidayResponse> holidayResponses = new ArrayList<>();
         for (Holiday holiday : holidayRepository.findAll()) {
@@ -41,9 +42,18 @@ public class HolidayService {
 
 
     public HolidayResponse create(HolidayRequest request) {
+
+        //       Holiday holiday= holidayRepository.save(request.)
+
+
         Holiday holiday = new Holiday();
         holiday.setName(request.getName());
-        holiday.setImage(request.getImage());
+//        holiday.setImage(request.getImage());
+        if (request.getImage() == null){
+            holiday.setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIiwDDS9S7wYp5muIVCt9PwRmmQpP5rSYkg&usqp=CAU");
+    }else {
+            holiday.setImage(request.getImage());
+        }
         holiday.setDate(request.getDate());
         holiday.setCreatedDate(LocalDate.now());
 
@@ -56,6 +66,7 @@ public class HolidayService {
 
     public HolidayResponse update(Long id, HolidayRequest request) throws NotFoundException{
         Holiday holiday = holidayRepository.findById(id).get();
+
         holiday.setName(request.getName());
         holiday.setImage(request.getImage());
         holiday.setDate(request.getDate());
@@ -108,4 +119,6 @@ public class HolidayService {
         String name = text == null ? "" : text;
         return holidayRepository.searchAndPagination(name.toUpperCase(), pageable);
     }
+
+
 }
