@@ -1,0 +1,83 @@
+package com.peaksoft.giftlistm5.service;
+
+import com.peaksoft.giftlistm5.dto.GiftRequest;
+import com.peaksoft.giftlistm5.dto.GiftResponse;
+import com.peaksoft.giftlistm5.enums.Condition;
+import com.peaksoft.giftlistm5.enums.State;
+import com.peaksoft.giftlistm5.exception.NotFoundException;
+import com.peaksoft.giftlistm5.model.Gift;
+import com.peaksoft.giftlistm5.model.User;
+import com.peaksoft.giftlistm5.repository.GiftRepository;
+import com.peaksoft.giftlistm5.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.security.Principal;
+
+@Service
+@RequiredArgsConstructor
+public class GiftService {
+    private final GiftRepository giftRepository;
+    private final UserRepository userRepository;
+    public GiftResponse create(GiftRequest request) {
+        User owner = getAuthenticatedUser();
+        Gift gift = mapToGift(request);
+        gift.setOwner(owner);
+        if (request.isCharity()) {
+            owner.getCharityList().add(gift);
+        }
+        return mapToResponse(giftRepository.save(gift));
+    }
+    public GiftResponse update(GiftRequest request, Long id) {
+        Gift gift = giftRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Gift not found, by id = " + id)
+        );
+        gift.setName(request.getName());
+        gift.setDescription(request.getDescription());
+        gift.setMainCategory(request.getMainCategory());
+        gift.setSubCategory(request.getSubCategory());
+        gift.setState(State.valueOf(request.getState()));
+        gift.setCondition(Condition.valueOf(request.getCondition()));
+        return mapToResponse(giftRepository.save(gift));
+    }
+    public Gift mapToGift(GiftRequest request) {
+        return Gift.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .mainCategory(request.getMainCategory())
+                .subCategory(request.getSubCategory())
+                .state(State.valueOf(request.getState()))
+                .condition(Condition.valueOf(request.getCondition()))
+                .isCharity(request.isCharity())
+                .holidayId(request.getHolidayId())
+                .ownerId(request.getOwnerId()).build();
+    }
+
+    public GiftResponse mapToResponse(Gift gift) {
+        return GiftResponse.builder()
+                .id(gift.getId())
+                .name(gift.getName())
+                .description(gift.getDescription())
+                .mainCategory(gift.getMainCategory())
+                .subCategory(gift.getSubCategory())
+                .state(String.valueOf(gift.getState()))
+                .condition(String.valueOf(gift.getCondition()))
+                .isCharity(gift.isCharity())
+                .holidayId(gift.getHolidayId())
+                .ownerId(gift.getOwnerId()).build();
+    }
+
+    public User getAuthenticatedUser(){
+        Authentication auth;
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            throw new NotFoundException("Authenticated user is null");
+        } else {
+            auth = SecurityContextHolder.getContext().getAuthentication();
+        }
+        return userRepository.findByEmail(auth.getName()).orElseThrow(
+                () -> new NotFoundException("User not found by email = " + auth.getName())
+        );
+    }
+}

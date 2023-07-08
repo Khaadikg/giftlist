@@ -55,7 +55,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private Set<User> friends;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
-    private List<Charity> charities;
+    @Column(name = "charity_list")
+    private List<Gift> charityList; // подарки данные на праздники и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Gift> gifts; // подарки данные на праздники и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
