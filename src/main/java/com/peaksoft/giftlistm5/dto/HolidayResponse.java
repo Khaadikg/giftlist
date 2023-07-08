@@ -15,6 +15,5 @@ public class HolidayResponse {
     private String image;
     private LocalDate date;
     private LocalDate createDate;
-    private Long userId;
-    private String userName;
+    private String ownerName;
 }
