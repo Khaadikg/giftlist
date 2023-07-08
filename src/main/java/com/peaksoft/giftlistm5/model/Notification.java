@@ -1,5 +1,6 @@
 package com.peaksoft.giftlistm5.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.giftlistm5.enums.NotificationType;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +25,12 @@ public class Notification {
     private String message;
     @Enumerated(EnumType.STRING)
     private NotificationType type;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST})
+    @JoinColumn(name = "receivers_id")
+    @JsonIgnore
+    private User receiver;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST})
     @JoinColumn(name = "users_id")
+    @JsonIgnore
     private User owner;
 }
