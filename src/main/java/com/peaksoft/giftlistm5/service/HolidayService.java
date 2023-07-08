@@ -19,16 +19,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class HolidayService {
     private final HolidayRepository holidayRepository;
-    private final UserRepository userRepository;
-
-
-
     public List<HolidayResponse> getAll() {
         List<HolidayResponse> holidayResponses = new ArrayList<>();
         for (Holiday holiday : holidayRepository.findAll()) {
@@ -36,11 +31,11 @@ public class HolidayService {
         }
         return holidayResponses;
     }
+
     public HolidayResponse getById(Long id) {
         Holiday holiday = holidayRepository.findById(id).get();
         return mapToResponse(holiday);
     }
-
 
     public HolidayResponse create(HolidayRequest request) {
         User user = getAuthUser();
@@ -69,15 +64,14 @@ public class HolidayService {
         holiday.setDate(request.getDate());
         holidayRepository.save(holiday);
         return mapToResponse(holiday);
-
         }
+
     public void delete(Long id) {
         holidayRepository.deleteById(id);
 //        Holiday holiday = holidayRepository.findById(id).get();
 //        holidayRepository.deleteById(holiday.getId());
 //        lo
     }
-
 
     public HolidayResponse mapToResponse(Holiday holiday) {
         User user = getAuthUser();
