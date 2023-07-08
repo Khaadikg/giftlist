@@ -26,6 +26,7 @@ public class HolidayService {
             holidayResponses.add(mapToResponse(holiday));
         }
         return holidayResponses;
+
     }
 
     public HolidayResponse getById(Long id) {
