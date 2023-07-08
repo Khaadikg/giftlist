@@ -1,7 +1,6 @@
 package com.peaksoft.giftlistm5.service;
 
 import com.peaksoft.giftlistm5.dto.FriendResponse;
-import com.peaksoft.giftlistm5.dto.UserResponse;
 import com.peaksoft.giftlistm5.enums.NotificationType;
 import com.peaksoft.giftlistm5.exception.NotFoundException;
 import com.peaksoft.giftlistm5.exception.UserAlreadyExistException;
@@ -12,7 +11,7 @@ import com.peaksoft.giftlistm5.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -74,14 +73,16 @@ public class FriendService {
                         .type(NotificationType.ASK_FOR_FRIENDSHIP)
                         .owner(owner).build();
     }
-    public Notification defaultReplyFriendNotification(User user, Boolean accept) {// не используется в репо логике
+    public Notification defaultReplyFriendNotification(User receiver, Boolean accept) {// не используется в репо логике
         String replyMessage = (accept) ? " принял" : " отклонил";
+        User user = getAuthorizedUser(SecurityContextHolder.getContext().getAuthentication());
         return notificationRepository.save(
                 Notification.builder()
                         .message("Пользователь "+ user.getFirstName() + user.getLastName()
                                 + replyMessage + " ваш запрос в друзья!")
                         .createdDate(LocalDate.now())
                         .type(NotificationType.REPLY_FRIENDSHIP)
+                        .receiver(receiver)
                         .owner(user).build()
         );
     }
@@ -90,11 +91,12 @@ public class FriendService {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(
                 () -> new NotFoundException("There is no notification by id = " + notificationId)
         );
-        User sender = notification.getOwner();
+        User sender = userRepository.findByEmail(notification.getOwner().getEmail()).orElseThrow(
+                () -> new NotFoundException("User not found in notification!")
+        );
         if (!bool) {
                 sender.getReceiving()
                         .add(defaultReplyFriendNotification(replier, false));
-                notificationRepository.saveAll(sender.getReceiving());
                 userRepository.save(sender);
                 replier.getReceiving().removeIf(
                         notification2 -> notification2.getId().equals(notificationId)
@@ -106,12 +108,12 @@ public class FriendService {
         else {
             replier.getFriends().add(sender);
             sender.getFriends().add(replier);
-            sender.getReceiving()//должен быть дан по дефолту пустой лист
+            replier.getReceiving().removeIf(
+                    notification2 -> notification2.getId().equals(notificationId)
+            );
+            sender.getReceiving()
                     .add(defaultReplyFriendNotification(sender, true));
-            notificationRepository.saveAll(sender.getReceiving());
             notificationRepository.deleteById(notificationId);
-            userRepository.save(sender);
-            userRepository.save(replier);// надо ли дублировать подписки?
         }
         return "Пользователь принял дружбу!";
     }
