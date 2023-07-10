@@ -37,4 +37,5 @@ public class CharityService {
                 () -> new NotFoundException("User not found by email = " + auth.getName())
         );
     }
+
 }
