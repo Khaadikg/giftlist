@@ -36,6 +36,7 @@ public class User implements UserDetails{
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
+    private int pinCode;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
