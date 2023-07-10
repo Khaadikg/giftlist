@@ -18,6 +18,7 @@ public class GiftResponse {
     private String state;//Enum
     private String condition;//Enum
     private boolean isCharity; // true if it is for charity
+    private boolean isWish;
     private Long holidayId;// null if it is for charity
     private Long ownerId;
 }

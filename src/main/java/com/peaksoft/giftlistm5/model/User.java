@@ -58,7 +58,7 @@ public class User implements UserDetails{
     private Set<User> friends;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     @Column(name = "charity_list")
-    private List<Gift> charityList; // подарки данные на праздники и БЛ
+    private List<Gift> charityList; // подарки данные for charity и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Gift> gifts; // подарки данные на праздники и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")

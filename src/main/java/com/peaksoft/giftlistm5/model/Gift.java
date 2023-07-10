@@ -35,15 +35,20 @@ public class Gift {
     @OneToOne(cascade = CascadeType.ALL)
     private Complaint complaint;
     private boolean isCharity;
+    private boolean isWish;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
     @Transient
     private Long holidayId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST})
     @JoinColumn(name = "users_id")
     private User owner;
     @Transient
     private Long ownerId;
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinColumn(name = "charities_id")
+    private Charity charity;
+    @Transient
+    private Long charityId;
 }
