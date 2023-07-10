@@ -25,6 +25,7 @@ public class CharityService {
     }
     public Notification giftStatusActions(Long id, String status) {
         return null;
+
     }
     public User getAuthenticatedUser(){
         Authentication auth;
