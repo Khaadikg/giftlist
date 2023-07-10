@@ -81,6 +81,8 @@ public class UserService {
         User existUser = userRepository.findByEmail(loginRequest.getEmail())
                 .stream().findAny().orElseThrow(
                         () -> new IncorrectLoginException("Email is not correct"));
+        existUser.setPinCode(0);
+        userRepository.save(existUser);
         if (passwordEncoder.matches(loginRequest.getPassword(), existUser.getPassword())) {
             UsernamePasswordAuthenticationToken token =
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
