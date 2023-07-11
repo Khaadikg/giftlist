@@ -23,7 +23,6 @@ public class EmailService {
     private UserRepository repository;
     private final BCryptPasswordEncoder encoder;
 
-
     public void sendSimpleMessage(int stringPinCode, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         String pinCode = String.valueOf(stringPinCode);
@@ -32,8 +31,6 @@ public class EmailService {
         message.setSubject("Password change");
         message.setText(pinCode);
         javaMailSender.send(message);
-
-
     }
 
     public int pinCode() {

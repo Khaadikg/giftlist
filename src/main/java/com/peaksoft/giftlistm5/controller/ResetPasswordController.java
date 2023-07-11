@@ -17,16 +17,19 @@ public class ResetPasswordController {
     public ResetPasswordController(EmailService emailService) {
         this.emailService = emailService;
     }
+
     @GetMapping("/resetPassword")
     public String sendEmail(@RequestParam String email) {
         User user = emailService.resetPassword(email);
         emailService.sendSimpleMessage(user.getPinCode(), email);
         return user.getEmail();
     }
+
     @GetMapping("/changePassword")
     public String changePassword(@RequestParam int pinCode,
                                  @RequestParam String password,
                                  @RequestParam String passwordConfirm,
                                  @RequestParam String email) {
         return emailService.checkPinCode(pinCode, email, password, passwordConfirm);
-    }}
+    }
+}
