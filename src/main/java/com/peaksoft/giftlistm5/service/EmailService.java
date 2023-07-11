@@ -23,9 +23,6 @@ public class EmailService {
     private UserRepository repository;
     private final BCryptPasswordEncoder encoder;
 
-    {
-        this.encoder = new BCryptPasswordEncoder();
-    }
 
     public void sendSimpleMessage(int stringPinCode, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
