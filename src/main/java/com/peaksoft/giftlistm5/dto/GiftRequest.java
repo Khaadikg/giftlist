@@ -26,4 +26,5 @@ public class GiftRequest {
     private boolean isCharity;
     private boolean isWish;
     private Long holidayId;
+private Long ownerId;
 }

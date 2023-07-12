@@ -90,6 +90,31 @@ public class GiftService {
         }
         return responses;
     }
+    private GiftResponse convertGiftToGiftResponse(Gift gift) {
+        User owner = gift.getOwner();
+        return GiftResponse.builder()
+                .id(gift.getId())
+                .name(gift.getName())
+                .description(gift.getDescription())
+                .mainCategory(gift.getMainCategory())
+                .subCategory(gift.getSubCategory())
+                .state(gift.getState().toString())
+                .condition(gift.getCondition().toString())
+                .isCharity(gift.isCharity())
+                .isWish(gift.isWish())
+                .holidayId(gift.getHolidayId())
+                .ownerId(owner.getId())
+                .build();
+    }
+
+    public List<GiftResponse> getGiftsByCharity(){
+        User user = getAuthenticatedUser();
+        List<GiftResponse> charityGifts = new ArrayList<>();
+        for(Gift gift : user.getCharityList()){
+            charityGifts.add(mapToResponse(gift));
+        }
+        return charityGifts;
+    }
     public Gift mapToGift(GiftRequest request) {
         User user = getAuthenticatedUser();
         return Gift.builder()

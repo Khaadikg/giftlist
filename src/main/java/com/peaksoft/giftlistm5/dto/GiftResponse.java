@@ -22,3 +22,5 @@ public class GiftResponse {
     private Long holidayId;// null if it is for charity
     private Long ownerId;
 }
+
+
