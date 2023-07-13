@@ -1,5 +1,6 @@
 package com.peaksoft.giftlistm5.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.giftlistm5.enums.Condition;
 import com.peaksoft.giftlistm5.enums.State;
 import lombok.*;
@@ -25,6 +26,7 @@ public class Gift {
     private String mainCategory;
     @Column(name = "sub_category")
     private String subCategory;
+    private boolean isCharity;
     @CreatedDate
     @Column(name = "created_date")
     private LocalDate createdDate;
@@ -34,14 +36,19 @@ public class Gift {
     private Condition condition;
     @OneToOne(cascade = CascadeType.ALL)
     private Complaint complaint;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
     @Transient
     private Long holidayId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE,CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "users_id")
+    @JsonIgnore
     private User owner;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "receiver_id")
+    @JsonIgnore
+    private User receiver;
     @Transient
     private Long ownerId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
