@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,26 @@ public class CharityService {
     private final UserRepository userRepository;
 
     public List<GiftResponse> getAllCharityGifts() { // все подарки с рпеозитория отмеченные isCharity = true
-List<GiftResponse> charityGifts = service.getGiftsByCharity();
-        return charityGifts.stream()
-                .map(this:: convertGiftToGiftResponse)
+        User user = getAuthenticatedUser();
+        return user.getGifts().stream()
+                .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
+    public GiftResponse mapToResponse(Gift gift) {
+        return GiftResponse.builder()
+                .id(gift.getId())
+                .name(gift.getName())
+                .description(gift.getDescription())
+                .mainCategory(gift.getMainCategory())
+                .subCategory(gift.getSubCategory())
+                .state(String.valueOf(gift.getState()))
+                .condition(String.valueOf(gift.getCondition()))
+                .isWish(gift.isWish())
+                .isCharity(gift.isCharity())
+                .holidayId(gift.getHolidayId())
+                .ownerId(gift.getOwnerId()).build();
+    }
+
 
 
 
