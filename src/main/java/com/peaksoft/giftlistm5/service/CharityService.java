@@ -22,12 +22,28 @@ import java.util.stream.Collectors;
 public class CharityService {
     private final GiftService service;
     private final UserRepository userRepository;
+    private final GiftRepository giftRepository;
 
-    public List<GiftResponse> getAllCharityGifts() { // все подарки с рпеозитория отмеченные isCharity = true
+    public List<GiftResponse> getPersonalCharityGifts() { // все подарки с рпеозитория отмеченные isCharity = true
         User user = getAuthenticatedUser();
         return user.getGifts().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+
+
+
+//    public String deleteCharityGiftById(Long id) {
+//        service.delete(id);
+//        return "SUCCESS";
+//
+//    }
+
+    public List<GiftResponse> getAllCharityGifts() {
+        return giftRepository.findAllByIsCharity().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
     }
     public GiftResponse mapToResponse(Gift gift) {
         return GiftResponse.builder()
@@ -43,15 +59,6 @@ public class CharityService {
                 .holidayId(gift.getHolidayId())
                 .ownerId(gift.getOwnerId()).build();
     }
-
-
-
-
-    public String deleteCharityGiftById(Long id) {
-service.delete(id);
-        return"SUCCESS";
-    }
-
     public User getAuthenticatedUser(){
         Authentication auth;
         if (SecurityContextHolder.getContext().getAuthentication() == null) {

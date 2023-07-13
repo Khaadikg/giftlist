@@ -14,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,14 +90,7 @@ public class GiftService {
     }
 
 
-    public List<GiftResponse> getGiftsByCharity(){
-        User user = getAuthenticatedUser();
-        List<GiftResponse> charityGifts = new ArrayList<>();
-        for(Gift gift : user.getCharityList()){
-            charityGifts.add(mapToResponse(gift));
-        }
-        return charityGifts;
-    }
+
     public Gift mapToGift(GiftRequest request) {
         User user = getAuthenticatedUser();
         return Gift.builder()
