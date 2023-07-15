@@ -1,6 +1,7 @@
 package com.peaksoft.giftlistm5.model;
 
 import com.peaksoft.giftlistm5.enums.Condition;
+import com.peaksoft.giftlistm5.enums.GiftType;
 import com.peaksoft.giftlistm5.enums.State;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -34,8 +35,12 @@ public class Gift {
     private Condition condition;
     @OneToOne(cascade = CascadeType.ALL)
     private Complaint complaint;
-    private boolean isCharity;
-    private boolean isWish;
+    @Column(name = "gift_type")
+    @Enumerated(EnumType.STRING)
+    private GiftType giftType;
+//    @Transient
+//    @Column(name = "gift_type_string")
+//    private String giftTypeString;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
@@ -46,9 +51,10 @@ public class Gift {
     private User owner;
     @Transient
     private Long ownerId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "charities_id")
-    private Charity charity;
-    @Transient
-    private Long charityId;
+//    {
+//        mapToString();
+//    }
+//    private void mapToString() {
+//        this.giftTypeString = String.valueOf(this.giftType);
+//    }
 }

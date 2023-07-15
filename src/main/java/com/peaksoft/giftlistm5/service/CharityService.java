@@ -1,6 +1,7 @@
 package com.peaksoft.giftlistm5.service;
 
 import com.peaksoft.giftlistm5.dto.GiftResponse;
+import com.peaksoft.giftlistm5.enums.GiftType;
 import com.peaksoft.giftlistm5.exception.NotFoundException;
 import com.peaksoft.giftlistm5.model.Gift;
 import com.peaksoft.giftlistm5.model.Notification;
@@ -32,19 +33,18 @@ public class CharityService {
     }
 
 
-
 //    public String deleteCharityGiftById(Long id) {
 //        service.delete(id);
 //        return "SUCCESS";
-//
-//    }
+// }
 
     public List<GiftResponse> getAllCharityGifts() {
-        return giftRepository.findAllByIsCharity().stream()
+        return giftRepository.findAllByIsCharity(GiftType.CHARITY).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
 
     }
+
     public GiftResponse mapToResponse(Gift gift) {
         return GiftResponse.builder()
                 .id(gift.getId())
@@ -54,12 +54,14 @@ public class CharityService {
                 .subCategory(gift.getSubCategory())
                 .state(String.valueOf(gift.getState()))
                 .condition(String.valueOf(gift.getCondition()))
-                .isWish(gift.isWish())
-                .isCharity(gift.isCharity())
+//                .isWish(gift.isWish())
+//                .isCharity(gift.isCharity())
+                .giftType(String.valueOf(gift.getGiftType()))
                 .holidayId(gift.getHolidayId())
                 .ownerId(gift.getOwnerId()).build();
     }
-    public User getAuthenticatedUser(){
+
+    public User getAuthenticatedUser() {
         Authentication auth;
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             throw new NotFoundException("Authenticated user is null");
