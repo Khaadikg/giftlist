@@ -1,5 +1,6 @@
 package com.peaksoft.giftlistm5.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.giftlistm5.enums.Condition;
 import com.peaksoft.giftlistm5.enums.GiftType;
 import com.peaksoft.giftlistm5.enums.State;
@@ -46,9 +47,14 @@ public class Gift {
     private Holiday holiday;
     @Transient
     private Long holidayId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "users_id")
+    @JsonIgnore
     private User owner;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "receiver_id")
+    @JsonIgnore
+    private User receiver;
     @Transient
     private Long ownerId;
 //    {

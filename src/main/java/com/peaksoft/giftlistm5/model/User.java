@@ -1,5 +1,6 @@
 package com.peaksoft.giftlistm5.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.giftlistm5.enums.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,6 +36,7 @@ public class User implements UserDetails{
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
+    private int pinCode;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String interests;
@@ -63,10 +65,17 @@ public class User implements UserDetails{
     private List<Gift> gifts; // подарки данные на праздники и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Gift> wishes; // желаемые подарки на прздник
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "receiver")
+    private List<Gift> booking;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "user")
     private List<Holiday> holidays;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Complaint> complaints;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "receiver")
+    private List<Notification> receiving;
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Notification> notifications;
 
