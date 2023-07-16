@@ -51,7 +51,7 @@ public class BookingService {
         List<Gift> wishGifts = new ArrayList<>();
         List<Gift> charityGifts = new ArrayList<>();
         for (Gift gift : user.getBooking()) {
-            if (gift.getState().equals(State.BOOKED) && gift.isCharity()) {
+            if (gift.getState().equals(State.BOOKED))  {
                 charityGifts.add(gift);
             }
             else wishGifts.add(gift);
