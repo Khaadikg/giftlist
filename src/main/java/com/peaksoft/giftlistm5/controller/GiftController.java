@@ -14,32 +14,27 @@ import java.util.List;
 @RequestMapping("/api/gifts")
 public class GiftController {
     private final GiftService giftService;
-
     @PostMapping()
     @PreAuthorize("hasAuthority('USER')")
     public GiftResponse create(@RequestBody GiftRequest giftRequest) {
         return giftService.create(giftRequest);
     }
-
     @PutMapping("{id}")
     @PreAuthorize("hasAuthority('USER')")
     public GiftResponse update(@RequestBody GiftRequest request, @PathVariable("id") Long id) {
         return giftService.update(request, id);
     }
-
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('USER')")
     public String delete(@PathVariable("id") Long id) {
         giftService.delete(id);
         return "Successfully gift  deleted with id : " + id;
     }
-
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority('USER')")
     public GiftResponse getById(@PathVariable("id") Long id) {
         return giftService.getGiftById(id);
     }
-
     @GetMapping()
     public List<GiftResponse> getAll() {
         return giftService.getAllGifts();

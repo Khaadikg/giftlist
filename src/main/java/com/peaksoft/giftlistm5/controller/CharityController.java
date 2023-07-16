@@ -20,23 +20,19 @@ public class CharityController {
     public List<GiftResponse> getPersonalCharityGifts() {
         return charityService.getPersonalCharityGifts();
     }
-
     @PostMapping()
     public GiftResponse create(@RequestBody GiftRequest giftRequest) {
         return giftService.create(giftRequest);
     }
-
     @GetMapping("{id}")
     public GiftResponse update(@RequestBody GiftRequest request, @PathVariable("id") Long id) {
         return giftService.update(request, id);
     }
-
     @DeleteMapping("{id}")
     public String deleteCharityGiftById(@PathVariable Long id) {
         giftService.delete(id);
         return "SUCCESS";
     }
-
     @GetMapping("/allGifts")
     public List<GiftResponse> getAllCharityGifts() {
         return charityService.getAllCharityGifts();
