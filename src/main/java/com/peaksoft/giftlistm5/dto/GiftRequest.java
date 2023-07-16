@@ -14,8 +14,6 @@ public class GiftRequest {
     private String subCategory;
     private String state;
     private String condition;
-//    private boolean isCharity;
-//    private boolean isWish;
     private String giftType;
     private Long holidayId;
     private Long ownerId;

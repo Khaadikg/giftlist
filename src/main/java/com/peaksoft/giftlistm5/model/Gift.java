@@ -39,9 +39,6 @@ public class Gift {
     @Column(name = "gift_type")
     @Enumerated(EnumType.STRING)
     private GiftType giftType;
-//    @Transient
-//    @Column(name = "gift_type_string")
-//    private String giftTypeString;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
@@ -57,10 +54,5 @@ public class Gift {
     private User receiver;
     @Transient
     private Long ownerId;
-//    {
-//        mapToString();
-//    }
-//    private void mapToString() {
-//        this.giftTypeString = String.valueOf(this.giftType);
-//    }
+
 }

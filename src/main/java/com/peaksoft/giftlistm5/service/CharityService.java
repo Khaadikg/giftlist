@@ -31,20 +31,12 @@ public class CharityService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
-
-
-//    public String deleteCharityGiftById(Long id) {
-//        service.delete(id);
-//        return "SUCCESS";
-// }
-
     public List<GiftResponse> getAllCharityGifts() {
         return giftRepository.findAllByIsCharity(GiftType.CHARITY).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
 
     }
-
     public GiftResponse mapToResponse(Gift gift) {
         return GiftResponse.builder()
                 .id(gift.getId())
@@ -54,13 +46,10 @@ public class CharityService {
                 .subCategory(gift.getSubCategory())
                 .state(String.valueOf(gift.getState()))
                 .condition(String.valueOf(gift.getCondition()))
-//                .isWish(gift.isWish())
-//                .isCharity(gift.isCharity())
                 .giftType(String.valueOf(gift.getGiftType()))
                 .holidayId(gift.getHolidayId())
                 .ownerId(gift.getOwnerId()).build();
     }
-
     public User getAuthenticatedUser() {
         Authentication auth;
         if (SecurityContextHolder.getContext().getAuthentication() == null) {

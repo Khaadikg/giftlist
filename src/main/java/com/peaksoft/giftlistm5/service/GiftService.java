@@ -37,7 +37,6 @@ public class GiftService {
         else owner.getGifts().add(gift);
         return mapToResponse(giftRepository.save(gift));
     }
-
     public GiftResponse update(GiftRequest request, Long id) {
         Gift gift = giftRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Gift not found, by id = " + id)
@@ -56,7 +55,6 @@ public class GiftService {
         gift.setCondition(Condition.valueOf(request.getCondition()));
         return mapToResponse(giftRepository.save(gift));
     }
-
     public String delete(Long id) {
         User user = getAuthenticatedUser();
         Gift gift = giftRepository.findById(id).orElseThrow(
@@ -75,7 +73,6 @@ public class GiftService {
         }
         return "You dont have such gift!";
     }
-
     public GiftResponse getGiftById(Long id) {
         User user = getAuthenticatedUser();
         Gift gift = giftRepository.findById(id).orElseThrow(
@@ -85,7 +82,6 @@ public class GiftService {
             return mapToResponse(gift);
         } else throw new IgnoreActionException("You cant delete not your gifts!");
     }
-
     public List<GiftResponse> getAllGifts() {
         User user = getAuthenticatedUser();
         List<GiftResponse> responses = new ArrayList<>();
@@ -94,8 +90,6 @@ public class GiftService {
         }
         return responses;
     }
-
-
     public Gift mapToGift(GiftRequest request) {
         User user = getAuthenticatedUser();
         String giftType = (request.getGiftType() == null) ?
@@ -107,14 +101,11 @@ public class GiftService {
                 .subCategory(request.getSubCategory())
                 .state(State.valueOf(request.getState()))
                 .condition(Condition.valueOf(request.getCondition()))
-//                .isCharity(request.isCharity())
-//                .isWish(request.isWish())
                 .giftType(GiftType.valueOf(giftType))
                 .holidayId(request.getHolidayId())
                 .owner(user)
                 .ownerId(user.getId()).build();
     }
-
     public GiftResponse mapToResponse(Gift gift) {
         return GiftResponse.builder()
                 .id(gift.getId())
@@ -124,13 +115,10 @@ public class GiftService {
                 .subCategory(gift.getSubCategory())
                 .state(String.valueOf(gift.getState()))
                 .condition(String.valueOf(gift.getCondition()))
-//                .isWish(gift.isWish())
-//                .isCharity(gift.isCharity())
                 .giftType(String.valueOf(gift.getGiftType()))
                 .holidayId(gift.getHolidayId())
                 .ownerId(gift.getOwnerId()).build();
     }
-
     public User getAuthenticatedUser() {
         Authentication auth;
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
