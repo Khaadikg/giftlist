@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+
 @Getter
 @Setter
 @Builder
@@ -15,5 +16,4 @@ public class CharityResponse {
     private String mainCategory;
     private String subCategory;
     private Long ownerId;
-
 }

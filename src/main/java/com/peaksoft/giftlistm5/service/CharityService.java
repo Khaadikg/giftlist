@@ -31,12 +31,14 @@ public class CharityService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
+
     public List<GiftResponse> getAllCharityGifts() {
         return giftRepository.findAllByIsCharity(GiftType.CHARITY).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
 
     }
+
     public GiftResponse mapToResponse(Gift gift) {
         return GiftResponse.builder()
                 .id(gift.getId())
@@ -50,6 +52,7 @@ public class CharityService {
                 .holidayId(gift.getHolidayId())
                 .ownerId(gift.getOwnerId()).build();
     }
+
     public User getAuthenticatedUser() {
         Authentication auth;
         if (SecurityContextHolder.getContext().getAuthentication() == null) {

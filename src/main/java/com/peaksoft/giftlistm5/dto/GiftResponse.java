@@ -13,10 +13,10 @@ public class GiftResponse {
     private String description;
     private String mainCategory;
     private String subCategory;
-    private String state;//Enum
-    private String condition;//Enum
+    private String state;
+    private String condition;
     private String giftType;
-    private Long holidayId;// null if it is for charity
+    private Long holidayId;//
     private Long ownerId;
 }
 
