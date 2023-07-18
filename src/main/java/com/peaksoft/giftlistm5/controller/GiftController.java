@@ -24,12 +24,14 @@ public class GiftController {
     public GiftResponse update(@RequestBody GiftRequest request, @PathVariable("id") Long id) {
         return giftService.update(request, id);
     }
+
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('USER')")
     public String delete(@PathVariable("id") Long id) {
         giftService.delete(id);
         return "Successfully gift  deleted with id : " + id;
     }
+
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority('USER')")
     public GiftResponse getById(@PathVariable("id") Long id) {

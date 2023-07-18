@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CharityService {
-    private final GiftService service;
+
     private final UserRepository userRepository;
     private final GiftRepository giftRepository;
 

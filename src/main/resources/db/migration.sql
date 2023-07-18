@@ -15,3 +15,4 @@ VALUES ('Bishkek', '2023-06-23', 'L', 'KYRGYZSTAN', 'admin@gmail.com', 'Admin', 
 
 INSERT INTO holidays(created_date, date, name, users_id)
 VALUES ('2023-12-06', '2020-08-03', 'Women^s day', 1);
+
