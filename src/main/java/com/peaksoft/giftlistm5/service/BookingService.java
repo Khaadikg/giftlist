@@ -1,5 +1,6 @@
 package com.peaksoft.giftlistm5.service;
 
+import com.peaksoft.giftlistm5.enums.GiftType;
 import com.peaksoft.giftlistm5.enums.State;
 import com.peaksoft.giftlistm5.exception.NotFoundException;
 import com.peaksoft.giftlistm5.model.Gift;
@@ -51,7 +52,7 @@ public class BookingService {
         List<Gift> wishGifts = new ArrayList<>();
         List<Gift> charityGifts = new ArrayList<>();
         for (Gift gift : user.getBooking()) {
-            if (gift.getState().equals(State.BOOKED) && gift.isCharity()) {
+            if (gift.getState().equals(State.BOOKED)&& gift.getState().equals(GiftType.CHARITY)) {
                 charityGifts.add(gift);
             }
             else wishGifts.add(gift);

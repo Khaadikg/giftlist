@@ -36,6 +36,7 @@ public class User implements UserDetails{
     @Column(name = "created_date")
     private LocalDate createdDate;
     private String password;
+    @Column(name = "pin_code")
     private int pinCode;
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -59,7 +60,8 @@ public class User implements UserDetails{
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
     private Set<User> friends;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
-    private List<Charity> charities;
+    @Column(name = "charity_list")
+    private List<Gift> charityList; // подарки данные for charity и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Gift> gifts; // подарки данные на праздники и БЛ
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "owner")

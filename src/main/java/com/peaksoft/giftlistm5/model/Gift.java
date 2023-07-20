@@ -2,6 +2,7 @@ package com.peaksoft.giftlistm5.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peaksoft.giftlistm5.enums.Condition;
+import com.peaksoft.giftlistm5.enums.GiftType;
 import com.peaksoft.giftlistm5.enums.State;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -26,7 +27,6 @@ public class Gift {
     private String mainCategory;
     @Column(name = "sub_category")
     private String subCategory;
-    private boolean isCharity;
     @CreatedDate
     @Column(name = "created_date")
     private LocalDate createdDate;
@@ -36,7 +36,10 @@ public class Gift {
     private Condition condition;
     @OneToOne(cascade = CascadeType.ALL)
     private Complaint complaint;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.DETACH})
+    @Column(name = "gift_type")
+    @Enumerated(EnumType.STRING)
+    private GiftType giftType;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "holidays_id")
     private Holiday holiday;
     @Transient
@@ -51,9 +54,5 @@ public class Gift {
     private User receiver;
     @Transient
     private Long ownerId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinColumn(name = "charities_id")
-    private Charity charity;
-    @Transient
-    private Long charityId;
+
 }

@@ -13,8 +13,6 @@ VALUES ('Bishkek', '2023-06-23', 'L', 'KYRGYZSTAN', 'admin@gmail.com', 'Admin', 
         'dancing,foreign language,cooking', 'Mamatisaeva', true,
         '$2a$12$6rCvnv687GdaIhxeuvGkCOuurNpa5T1NtSGaEo9QNK3ljud.iUl9e','0', '+996705230623', 'USER', 'THIRTY_FIVE');
 
-INSERT INTO charities(created_date, image, main_category, name, users_id)
-VALUES ('2023-04-15', null, null, 'Kamkorduk', 1);
-
 INSERT INTO holidays(created_date, date, name, users_id)
 VALUES ('2023-12-06', '2020-08-03', 'Women^s day', 1);
+
