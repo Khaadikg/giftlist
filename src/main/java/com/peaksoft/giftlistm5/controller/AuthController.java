@@ -15,7 +15,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("sign-up")
-    public UserResponse signUp(@RequestBody UserRequest request) throws Exception {
+    public UserResponse signUp(@RequestBody UserRequest request) {
         return userService.registration(request);
     }
 

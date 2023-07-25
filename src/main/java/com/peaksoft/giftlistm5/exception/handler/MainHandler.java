@@ -34,4 +34,9 @@ public class MainHandler {
     public ExceptionResponse userAlreadyExist(UserAlreadyExistException e) {
         return new ExceptionResponse(HttpStatus.FORBIDDEN, e.getClass().getName(), e.getMessage());
     }
+    @ExceptionHandler(IgnoreActionException.class)  // при регистрации(sign-up) дана уже существующая почта
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionResponse ignoreAction(IgnoreActionException e) {
+        return new ExceptionResponse(HttpStatus.FORBIDDEN, e.getClass().getName(), e.getMessage());
+    }
 }
